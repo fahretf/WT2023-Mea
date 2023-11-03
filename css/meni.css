@@ -4,11 +4,12 @@ h1{
 }
 
 .meni{
+    background-color: rgb(247, 150, 135);
     text-align: center;
     margin: 0; 
     position: fixed;
-    left: 5%;
-    right: 5%;
+    left: 0.5%;
+    right: 0.5%;
 }
 
 ul{
