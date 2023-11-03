@@ -3,10 +3,10 @@ ul{
 }
 
 li{
-    display: inline;
+    display: flex;
+    flex-direction: row;
 }
 
-h1{
-    text-align: center;
+body{
     background-color: aqua;
 }
