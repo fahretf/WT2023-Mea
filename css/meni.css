@@ -1,29 +1,24 @@
-h1{
-    text-align: center;
-    color: rgb(255, 81, 81);
-}
-
 .meni{
     background-color:  #ffc56f;
     text-align: center;
     margin: 0; 
+    top:0; 
+    left:0;
     position: fixed;
-    left: 0.5%;
-    right: 0.5%;
+    width: 100%;
 }
 
 ul{
     list-style: none;
-}
-
-li{
-    display: inline-flex;  
-    padding: 20px 20px 20px 20px; 
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: row;
+    padding: 0 20%;
 }
 
 a{
     color:rgb(0, 89, 255);
-    font-size: 30px;
+    font-size: 20px;
     text-decoration: none;
 }
 

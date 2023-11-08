@@ -1,0 +1,45 @@
+.nekretnine{
+    display: grid;
+    background-color: #fdf1d3;
+    margin-top: 40px;
+}
+
+body{
+    background-color: #fdf1d3;
+}
+
+#stan,#pp,#kuca{
+    display: grid;
+}
+
+img{
+    width:125px; 
+    height: 125px;
+}
+
+.cijena{
+    display: flex;
+    justify-content: right;
+}
+
+.stanovi{
+    background-color: white;
+    width: 300px;
+    height:280px;
+    margin:0 10px;
+    padding:7px;
+    box-sizing: border-box;
+}
+
+.center{
+    display: flex;
+    justify-content: center;
+}
+
+button{
+    align-items: center;
+}
+
+body {
+    font-family: Georgia, serif;
+  }
