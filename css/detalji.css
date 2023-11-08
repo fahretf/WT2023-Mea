@@ -21,8 +21,12 @@
 }
 
 .pitanje{
+    display: flex;
+    align-items:center;
+    justify-content: center;
     background-color: beige;
     border: 1px solid;
     margin:20px;
-    width: 60%;
+    width: 100%;
+    padding: 5px;
 } 
