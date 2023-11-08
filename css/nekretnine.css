@@ -1,15 +1,12 @@
 .nekretnine{
-    display: grid;
+    display: flex;
+    flex-direction: column;
     background-color: #fdf1d3;
     margin-top: 40px;
 }
 
 body{
     background-color: #fdf1d3;
-}
-
-#stan,#pp,#kuca{
-    display: grid;
 }
 
 img{
@@ -22,14 +19,25 @@ img{
     justify-content: right;
 }
 
-.stanovi{
-    background-color: white;
-    width: 300px;
+.card{
+    min-width: 300px;
     height:280px;
-    margin:0 10px;
     padding:7px;
     box-sizing: border-box;
 }
+
+.stanovi{
+    background-color: white;
+}
+
+.kuca{
+    background-color: powderblue;
+}
+
+.poslovni{
+    background-color: green;
+}
+
 
 .center{
     display: flex;
@@ -43,3 +51,13 @@ button{
 body {
     font-family: Georgia, serif;
   }
+
+.grid-container {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    flex-direction: row;
+    gap:20px;
+  }
+
