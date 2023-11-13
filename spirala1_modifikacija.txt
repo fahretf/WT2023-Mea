@@ -1,0 +1,1 @@
+U CSS datoteci profil.css klasi kutija sam promijenila flex direction iz row u column, te sam pomoću media querie-a odredila da kada je screen do 500px flex-direction bude column. 
