@@ -39,7 +39,10 @@ let SpisakNekretnina = function () {
   };
 
   let ucitajDetaljeNekretnine = function (id) {
-    // dodajte kod
+    for (let i = 0; i < listaNekretnina.length; i++) {
+      if (listaNekretnina[i].id === id) return listaNekretnina[i];
+    }
+    return null;
   };
 
   return {
