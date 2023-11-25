@@ -1,53 +1,175 @@
-const listaNekretnina = [
-  {
-    id: 1,
-    tip_nekretnine: "Stan",
-    kvadratura: 190,
-    naziv: "Useljiv stan Sarajevo",
-  },
-  {
-    id: 2,
-    tip_nekretnine: "Kuca",
-    kvadratura: 98,
-    naziv: " Sarajevo",
-  },
-  {
-    id: 3,
-    tip_nekretnine: "Stan",
-    naziv: " Sarajevo",
-    kvadratura: 56,
-  },
-];
+describe("SpisakNekretnina", function () {
+  // Sample data
+  let listaNekretnina = [
+    {
+      id: 1,
+      tip_nekretnine: "Stan",
+      naziv: "Useljiv stan Sarajevo",
+      kvadratura: 58,
+      cijena: 232000,
+      tip_grijanja: "plin",
+      lokacija: "Novo Sarajevo",
+      godina_izgradnje: 2019,
+      datum_objave: "01.10.2023.",
+      opis: "Sociis natoque penatibus.",
+      upiti: [
+        {
+          korisnik_id: 1,
+          tekst_upita: "Nullam eu pede mollis.",
+        },
+        {
+          korisnik_id: 2,
+          tekst_upita: "Phasellus viverra nulla.",
+        },
+      ],
+    },
+    {
+      id: 2,
+      tip_nekretnine: "Poslovni prostor",
+      naziv: "Mali poslovni prostor",
+      kvadratura: 20,
+      cijena: 70000,
+      tip_grijanja: "struja",
+      lokacija: "Centar",
+      godina_izgradnje: 2005,
+      datum_objave: "20.08.2023.",
+      opis: "Magnis dis parturient montes.",
+      upiti: [
+        {
+          korisnik_id: 2,
+          tekst_upita: "Integer tincidunt.",
+        },
+      ],
+    },
+    {
+      id: 3,
+      tip_nekretnine: "Stan",
+      naziv: "Novi stan u Sarajevu",
+      kvadratura: 75,
+      cijena: 280000,
+      tip_grijanja: "plin",
+      lokacija: "Stari Grad",
+      godina_izgradnje: 2020,
+      datum_objave: "15.11.2023.",
+      opis: "Lorem ipsum dolor sit amet.",
+      upiti: [
+        {
+          korisnik_id: 3,
+          tekst_upita: "Aenean commodo ligula eget dolor.",
+        },
+      ],
+    },
+    {
+      id: 4,
+      tip_nekretnine: "Poslovni prostor",
+      naziv: "Veliki poslovni prostor",
+      kvadratura: 100,
+      cijena: 150000,
+      tip_grijanja: "centralno",
+      lokacija: "Novi Grad",
+      godina_izgradnje: 2010,
+      datum_objave: "10.09.2023.",
+      opis: "Vestibulum dapibus, mauris nec malesuada.",
+      upiti: [
+        {
+          korisnik_id: 4,
+          tekst_upita: "Maecenas tempus, tellus eget condimentum rhoncus.",
+        },
+      ],
+    },
+  ];
 
-let filtrirajNekretnine = function (kriterij) {
-  let filter = [];
-  let keys = Object.keys(kriterij);
+  // Sample criteria
 
-  for (let i = 0; i < listaNekretnina.length; i++) {
-    let brojKriterija = 0;
-    for (let j = 0; j < keys.length; j++) {
-      if (keys[j] === "tip_nekretnine") {
-        if (listaNekretnina[i].tip_nekretnine === kriterij.tip_nekretnine)
-          brojKriterija++;
-      } else if (keys[j] === "max_cijena") {
-        if (listaNekretnina[i].cijena < kriterij.max_cijena) brojKriterija++;
-      } else if (keys[j] === "min_cijena") {
-        if (listaNekretnina[i].cijena > kriterij.min_cijena) brojKriterija++;
-      } else if (keys[j] === "max_kvadratura") {
-        if (listaNekretnina[i].kvadratura < kriterij.max_kvadratura)
-          brojKriterija++;
-      } else if (keys[j] === "min_kvadratura") {
-        if (listaNekretnina[i].kvadratura > kriterij.min_kvadratura)
-          brojKriterija++;
-      }
-    }
-    if (brojKriterija === keys.length) {
-      filter.push(listaNekretnina[i]);
-    }
-  }
+  // Initialize SpisakNekretnina
+  const spisakNekretninaInstance = SpisakNekretnina();
+  spisakNekretninaInstance.init(listaNekretnina, []);
 
-  if (filter.length === 0) return listaNekretnina;
-  return filter;
-};
+  it("should filter nekretnine based on criteria1", function () {
+    const kriterij = {
+      tip_nekretnine: "Stan",
+      max_cijena: 200000,
+    };
+    const filteredNekretnine =
+      spisakNekretninaInstance.filtrirajNekretnine(kriterij);
 
-console.log(filtrirajNekretnine({ max_cijena: 100 }));
+    chai.expect(filteredNekretnine).to.be.an("array");
+    chai.expect(filteredNekretnine).to.have.lengthOf(0);
+  });
+
+  it("should filter nekretnine based on criteria2", function () {
+    const kriterij = {
+      tip_nekretnine: "Stan",
+      max_cijena: 240000,
+    };
+    const filteredNekretnine =
+      spisakNekretninaInstance.filtrirajNekretnine(kriterij);
+
+    chai.expect(filteredNekretnine).to.be.an("array");
+    chai.expect(filteredNekretnine).to.have.lengthOf(1);
+    chai
+      .expect(filteredNekretnine[0])
+      .to.have.property("naziv")
+      .that.equals("Useljiv stan Sarajevo");
+    chai
+      .expect(filteredNekretnine[0])
+      .to.have.property("cijena")
+      .that.equals(232000);
+  });
+
+  it("should filter nekretnine based on criteria3", function () {
+    const kriterij = {
+      tip_nekretnine: "Stan",
+      max_cijena: 240000,
+      min_cijena: 250000,
+    };
+    const filteredNekretnine =
+      spisakNekretninaInstance.filtrirajNekretnine(kriterij);
+
+    chai.expect(filteredNekretnine).to.be.an("array");
+    chai.expect(filteredNekretnine).to.have.lengthOf(0);
+  });
+
+  it("should filter nekretnine based on criteria4", function () {
+    const kriterij = {
+      tip_nekretnine: "Poslovni prostor",
+    };
+    const filteredNekretnine =
+      spisakNekretninaInstance.filtrirajNekretnine(kriterij);
+
+    chai.expect(filteredNekretnine).to.be.an("array");
+    chai.expect(filteredNekretnine).to.have.lengthOf(2);
+  });
+
+  it("should filter nekretnine based on criteria5", function () {
+    const kriterij = {};
+    const filteredNekretnine =
+      spisakNekretninaInstance.filtrirajNekretnine(kriterij);
+
+    chai.expect(filteredNekretnine).to.be.an("array");
+    chai.expect(filteredNekretnine).to.have.lengthOf(4);
+  });
+
+  it("should filter nekretnine based on criteria6", function () {
+    const kriterij = {
+      pogresan: "nepotreban atribut",
+    };
+    const filteredNekretnine =
+      spisakNekretninaInstance.filtrirajNekretnine(kriterij);
+
+    chai.expect(filteredNekretnine).to.be.an("array");
+    chai.expect(filteredNekretnine).to.have.lengthOf(4);
+  });
+
+  it("should filter nekretnine based on criteria7", function () {
+    const spisakNekretninaInstance2 = SpisakNekretnina();
+    spisakNekretninaInstance2.init(listaNekretnina, []);
+    listaNekretnina = [];
+    const kriterij = {};
+    const filteredNekretnine =
+      spisakNekretninaInstance2.filtrirajNekretnine(kriterij);
+
+    chai.expect(filteredNekretnine).to.be.an("array");
+    chai.expect(filteredNekretnine).to.have.lengthOf(4);
+  });
+});

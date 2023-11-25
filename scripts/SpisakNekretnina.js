@@ -1,46 +1,60 @@
 let SpisakNekretnina = function () {
-  let listaNekretnina = [];
-  let listaKorisnika = [];
+  let listNekretnine = [];
+  let listKorisnici = [];
 
   let init = function (listaNekretnina, listaKorisnika) {
-    this.listaNekretnina = listaNekretnina;
-    this.listaKorisnika = listaKorisnika;
+    listNekretnine = listaNekretnina;
+    listKorisnici = listaKorisnika;
   };
 
   let filtrirajNekretnine = function (kriterij) {
-    let filter = [];
+    let filtriraneNekretnine = [];
     let keys = Object.keys(kriterij);
+    let ispravniKriteriji = [
+      "tip_nekretnine",
+      "max_cijena",
+      "min_cijena",
+      "max_kvadratura",
+      "min_kvadratura",
+    ];
 
-    for (let i = 0; i < listaNekretnina.length; i++) {
+    for (let i = 0; i < keys.length; i++) {
+      if (!ispravniKriteriji.includes(keys[i])) return listNekretnine;
+    }
+
+    for (let i = 0; i < listNekretnine.length; i++) {
       let brojKriterija = 0;
       for (let j = 0; j < keys.length; j++) {
-        if (keys[j] === "tip_nekretnine") {
-          if (listaNekretnina[i].tip_nekretnine === kriterij.tip_nekretnine)
+        if (keys[j] === ispravniKriteriji[0]) {
+          if (listNekretnine[i].tip_nekretnine === kriterij.tip_nekretnine)
             brojKriterija++;
-        } else if (keys[j] === "max_cijena") {
-          if (listaNekretnina[i].cijena < kriterij.max_cijena) brojKriterija++;
-        } else if (keys[j] === "min_cijena") {
-          if (listaNekretnina[i].cijena > kriterij.min_cijena) brojKriterija++;
-        } else if (keys[j] === "max_kvadratura") {
-          if (listaNekretnina[i].kvadratura < kriterij.max_kvadratura)
+        }
+        if (keys[j] === ispravniKriteriji[1]) {
+          if (listNekretnine[i].cijena < kriterij.max_cijena) brojKriterija++;
+        }
+        if (keys[j] === ispravniKriteriji[2]) {
+          if (listNekretnine[i].cijena > kriterij.min_cijena) brojKriterija++;
+        }
+        if (keys[j] === ispravniKriteriji[3]) {
+          if (listNekretnine[i].kvadratura < kriterij.max_kvadratura)
             brojKriterija++;
-        } else if (keys[j] === "min_kvadratura") {
-          if (listaNekretnina[i].kvadratura > kriterij.min_kvadratura)
+        }
+        if (keys[j] === ispravniKriteriji[4]) {
+          if (listNekretnine[i].kvadratura > kriterij.min_kvadratura)
             brojKriterija++;
         }
       }
       if (brojKriterija === keys.length) {
-        filter.push(listaNekretnina[i]);
+        filtriraneNekretnine.push(listNekretnine[i]);
       }
     }
 
-    if (filter.length === 0) return listaNekretnina;
-    return filter;
+    return filtriraneNekretnine;
   };
 
   let ucitajDetaljeNekretnine = function (id) {
-    for (let i = 0; i < listaNekretnina.length; i++) {
-      if (listaNekretnina[i].id === id) return listaNekretnina[i];
+    for (let i = 0; i < listNekretnine.length; i++) {
+      if (listNekretnine[i].id === id) return listNekretnine[i];
     }
     return null;
   };
