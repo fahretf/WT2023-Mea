@@ -48,7 +48,6 @@ let SpisakNekretnina = function () {
         filtriraneNekretnine.push(listaNekretnina[i]);
       }
     }
-
     return filtriraneNekretnine;
   };
 
