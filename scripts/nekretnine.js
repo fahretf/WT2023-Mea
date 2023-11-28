@@ -23,7 +23,7 @@ function spojiNekretnine(divReferenca, instancaModula, tip_nekretnine) {
       div.classList.add("card", "poslovni");
 
     const img = document.createElement("img");
-    img.src = "../slike/kosevo.jpg";
+    img.src = "../slike/slika.webp";
     img.alt = `slika ${nekretnina.naziv}`;
 
     const nazivP = document.createElement("p");
@@ -85,6 +85,24 @@ const listaNekretnina = [
   },
   {
     id: 2,
+    tip_nekretnine: "Kuća",
+    naziv: "Kuća Sarajevo-[Iznajmljivanje]",
+    kvadratura: 110,
+    cijena: 2000,
+    tip_grijanja: "struja",
+    lokacija: "Centar",
+    godina_izgradnje: 2005,
+    datum_objave: "20.08.2023.",
+    opis: "Magnis dis parturient montes.",
+    upiti: [
+      {
+        korisnik_id: 2,
+        tekst_upita: "Integer tincidunt.",
+      },
+    ],
+  },
+  {
+    id: 3,
     tip_nekretnine: "Poslovni prostor",
     naziv: "Mali poslovni prostor",
     kvadratura: 20,
@@ -92,6 +110,114 @@ const listaNekretnina = [
     tip_grijanja: "struja",
     lokacija: "Centar",
     godina_izgradnje: 2005,
+    datum_objave: "20.08.2023.",
+    opis: "Magnis dis parturient montes.",
+    upiti: [
+      {
+        korisnik_id: 2,
+        tekst_upita: "Integer tincidunt.",
+      },
+    ],
+  },
+  {
+    id: 4,
+    tip_nekretnine: "Poslovni prostor",
+    naziv: "Poslovni prostor",
+    kvadratura: 35,
+    cijena: 65000,
+    tip_grijanja: "plin",
+    lokacija: "Stari grad",
+    godina_izgradnje: 2008,
+    datum_objave: "20.08.2023.",
+    opis: "Magnis dis parturient montes.",
+    upiti: [
+      {
+        korisnik_id: 2,
+        tekst_upita: "Integer tincidunt.",
+      },
+    ],
+  },
+  {
+    id: 5,
+    tip_nekretnine: "Poslovni prostor",
+    naziv: "Poslovni prostor u Vogošći",
+    kvadratura: 50,
+    cijena: 90000,
+    tip_grijanja: "struja",
+    lokacija: "Vogošća",
+    godina_izgradnje: 2015,
+    datum_objave: "20.08.2023.",
+    opis: "Magnis dis parturient montes.",
+    upiti: [
+      {
+        korisnik_id: 2,
+        tekst_upita: "Integer tincidunt.",
+      },
+    ],
+  },
+  {
+    id: 6,
+    tip_nekretnine: "Kuća",
+    naziv: "Kuća sa baštom - Donji Hotonj",
+    kvadratura: 250,
+    cijena: 695000,
+    tip_grijanja: "struja",
+    lokacija: "Vogošća",
+    godina_izgradnje: 2003,
+    datum_objave: "20.08.2023.",
+    opis: "Magnis dis parturient montes.",
+    upiti: [
+      {
+        korisnik_id: 2,
+        tekst_upita: "Integer tincidunt.",
+      },
+    ],
+  },
+  {
+    id: 7,
+    tip_nekretnine: "Kuća",
+    naziv: "MYSPACE/Kuća",
+    kvadratura: 201,
+    cijena: 199000,
+    tip_grijanja: "struja",
+    lokacija: "Stari grad",
+    godina_izgradnje: 2018,
+    datum_objave: "20.08.2023.",
+    opis: "Magnis dis parturient montes.",
+    upiti: [
+      {
+        korisnik_id: 2,
+        tekst_upita: "Integer tincidunt.",
+      },
+    ],
+  },
+  {
+    id: 8,
+    tip_nekretnine: "Stan",
+    naziv: "Dvosoban stan - CENTAR",
+    kvadratura: 46,
+    cijena: 184000,
+    tip_grijanja: "struja",
+    lokacija: "Centar",
+    godina_izgradnje: 2003,
+    datum_objave: "20.08.2023.",
+    opis: "Magnis dis parturient montes.",
+    upiti: [
+      {
+        korisnik_id: 2,
+        tekst_upita: "Integer tincidunt.",
+      },
+    ],
+  },
+  {
+    id: 8,
+    tip_nekretnine: "Stan",
+    naziv: "Trosoban stan - CENTAR",
+    kvadratura: 71,
+    cijena: 309000,
+    tip_grijanja: "plin",
+    lokacija: "Centar",
+    godina_izgradnje: 2008,
     datum_objave: "20.08.2023.",
     opis: "Magnis dis parturient montes.",
     upiti: [
