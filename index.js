@@ -37,6 +37,7 @@ app.get("/profil.html", function (req, res) {
 app.get("/prijava.html", function (req, res) {
   res.sendFile(__dirname + "/public/html/prijava.html");
 });
+
 app.post("/login", function (req, res) {
   fs.readFile("data/korisnici.json", "utf-8", (err, data) => {
     if (err) {
@@ -63,17 +64,19 @@ app.post("/login", function (req, res) {
       bcrypt.compare(
         req.body.password,
         trazeniKorisnik.password,
-        function (err, hash) {
-          console.log(req.body.password);
-          console.log(trazeniKorisnik.password);
+        function (err, result) {
           if (err) {
             console.error(err);
             res.send({ greska: "Neuspješna prijava" });
-          } else if (hash) {
-            username = trazeniKorisnik.username;
-            req.session.data = JSON.stringify({ username });
+          } else if (result) {
+            req.session.data = {
+              username: trazeniKorisnik.username,
+              ime: trazeniKorisnik.ime,
+              prezime: trazeniKorisnik.prezime,
+            };
             res.send({ poruka: "Uspješna prijava" });
           } else {
+            // Incorrect password
             res.send({ greska: "Pogrešna lozinka" });
           }
         }
@@ -81,6 +84,42 @@ app.post("/login", function (req, res) {
     } catch (parseError) {
       console.error(parseError);
       res.send({ greska: "Greška pri parsiranju JSON-a" });
+    }
+  });
+});
+
+app.post("/logout", function (req, res, next) {
+  if (!req.session.username) {
+    res.status(401).send("{“greska”:”Neautorizovan pristup”}");
+  }
+  req.session.data = JSON.stringify(req.body);
+  req.session.destroy;
+  res.status(200).send("{“poruka”:”Uspješno ste se odjavili”}");
+});
+
+app.get("/korisnik", function (req, res) {
+  if (req.session && req.session.data && req.session.data.username) {
+    res.status(200).send(req.session.data);
+  } else {
+    res.status(401).send({ greska: "Neautorizovan pristup" });
+  }
+});
+
+app.get("/nekretnine", function (req, res) {
+  fs.readFile("data/nekretnine.json", "utf-8", (err, data) => {
+    if (err) {
+      console.error(err);
+      res.status(500).send({ greska: "Greška pri čitanju nekretnina" });
+      return;
+    }
+    try {
+      // Parse the JSON data
+      const nekretnine = JSON.parse(data);
+      // Send the nekretnine as a JSON response
+      res.status(200).json(nekretnine);
+    } catch (parseError) {
+      console.error(parseError);
+      res.status(500).send({ greska: "Greška pri parsiranju JSON-a" });
     }
   });
 });
