@@ -9,8 +9,14 @@ const PORT = 3000;
 const app = express();
 app.use(express.static("public"));
 app.use(bodyParser.json());
-
-//rutice :))
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(
+  session({
+    secret: "your-secret-key", // You should use a secure, random key for production
+    resave: false,
+    saveUninitialized: true,
+  })
+);
 
 app.get("/meni.html", function (req, res) {
   res.sendFile(__dirname + "/public/html/meni.html");
@@ -31,28 +37,51 @@ app.get("/profil.html", function (req, res) {
 app.get("/prijava.html", function (req, res) {
   res.sendFile(__dirname + "/public/html/prijava.html");
 });
-
 app.post("/login", function (req, res) {
-  fs.readFile("public/data/korisnici.js", "utf-8", (err, data) => {
-    const listaKorisnika = JSON.parse(data);
-    var trazeniKorisnik = listaKorisnika.find(
-      (korisnik) => korisnik.username == req.body.username
-    );
+  fs.readFile("data/korisnici.json", "utf-8", (err, data) => {
+    if (err) {
+      console.error(err);
+      res.send({ greska: "Greška pri čitanju korisnika" });
+      return;
+    }
 
-    bcrypt.compare(
-      req.body.password,
-      trazeniKorisnik.password,
-      function (err, hash) {
-        if (err) {
-          console.error(err);
-          res_json({ greska: "Neuspješna prijava" });
-        } else if (hash) {
-          username = trazeniKorisnik.username;
-          req.session.data = JSON.stringify({ username });
-          res_json({ poruka: "Uspješna prijava" });
-        }
+    try {
+      const listaKorisnika = JSON.parse(data);
+      var trazeniKorisnik = listaKorisnika.find(
+        (korisnik) => korisnik.username === req.body.username
+      );
+
+      if (!trazeniKorisnik) {
+        res.send({ greska: "Korisnik nije pronađen" });
+        return;
       }
-    );
+
+      bcrypt.hash(trazeniKorisnik.password, 10, function (err, hash) {
+        console.log(hash);
+      });
+
+      bcrypt.compare(
+        req.body.password,
+        trazeniKorisnik.password,
+        function (err, hash) {
+          console.log(req.body.password);
+          console.log(trazeniKorisnik.password);
+          if (err) {
+            console.error(err);
+            res.send({ greska: "Neuspješna prijava" });
+          } else if (hash) {
+            username = trazeniKorisnik.username;
+            req.session.data = JSON.stringify({ username });
+            res.send({ poruka: "Uspješna prijava" });
+          } else {
+            res.send({ greska: "Pogrešna lozinka" });
+          }
+        }
+      );
+    } catch (parseError) {
+      console.error(parseError);
+      res.send({ greska: "Greška pri parsiranju JSON-a" });
+    }
   });
 });
 
