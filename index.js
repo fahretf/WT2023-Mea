@@ -45,7 +45,7 @@ app.post("/login", function (req, res) {
       res.send({ greska: "Greška pri čitanju korisnika" });
       return;
     }
-
+    console.log(req.body);
     try {
       const listaKorisnika = JSON.parse(data);
       var trazeniKorisnik = listaKorisnika.find(
@@ -71,6 +71,7 @@ app.post("/login", function (req, res) {
           } else if (result) {
             req.session.data = {
               username: trazeniKorisnik.username,
+              id: trazeniKorisnik.id,
               ime: trazeniKorisnik.ime,
               prezime: trazeniKorisnik.prezime,
             };
@@ -123,5 +124,72 @@ app.get("/nekretnine", function (req, res) {
     }
   });
 });
+
+app.post("/upit", function (req, res) {
+  console.log(req);
+  if (!req.session.data) {
+    return res.status(401).send({ greska: "Neautorizovan pristup" });
+  }
+  fs.readFile("data/nekretnine.json", "utf-8", (err, data) => {
+    var nekretnine = JSON.parse(data);
+
+    var trazenaNekretnina = nekretnine.find((nekretnina) => {
+      console.log(nekretnina.id);
+      console.log(req.body.nekretnina_id);
+      console.log(nekretnina.id === req.body.nekretnina_id);
+      return nekretnina.id === req.body.nekretnina_id;
+    });
+
+    if (!trazenaNekretnina)
+      res.status(401).send({
+        greska: `Nekretnina sa id-em ${req.body.nekretnina_id} ne postoji`,
+      });
+
+    trazenaNekretnina.upiti.push({
+      korisnik_id: req.session.data.id,
+      tekst_upita: req.body.tekst_upita,
+    });
+    const updated = JSON.stringify(nekretnine);
+
+    fs.writeFile("data/nekretnine.json", updated, "utf-8", (err) => {
+      if (err) console.error(err);
+      else {
+        res.status(200).send({ poruka: "Upit je uspješno dodan" });
+      }
+    });
+  });
+});
+
+app.put("/korisnik", function (req, res) {
+  if (!req.session.data) {
+    return res.status(401).send({ greska: "Neautorizovan pristup" });
+  }
+
+  fs.readFile("data/korisnici.json", function (err,data) {
+    let listaKorisnika=JSON.parse(data);
+    let trazeniKorisnik = listaKorisnika.find(
+      (korisnik) => korisnik.username === req.session.data.username
+    );
+    
+    if(!trazeniKorisnik){
+      res.status(400).send({poruka:"Korisnik ne postoji"});
+    }
+
+    if(req.body.ime) trazeniKorisnik.ime=req.body.ime; 
+    if(req.body.prezime) trazeniKorisnik.prezime=req.body.prezime; 
+    if(req.body.username) trazeniKorisnik.username=req.body.username; 
+    if(req.body.password) trazeniKorisnik.password=req.body.password; 
+
+    
+    fs.writeFile("data/korisnici.json",JSON.stringify(listaKorisnika), "utf-8", (err) => {
+      if (err) console.error(err);
+      else {
+        res.status(200).send({ poruka: "Upit je uspješno dodan" });
+      }
+    });
+  });
+});
+
+
 
 app.listen(PORT, () => console.log("Server running"));
