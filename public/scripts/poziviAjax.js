@@ -11,6 +11,8 @@ const PoziviAjax = (() => {
     let ajax = new XMLHttpRequest();
     ajax.onreadystatechange = function () {
       // Anonimna funkcija
+      console.log("proslo");
+      console.log(ajax.responseText);
       if (ajax.readyState == 4 && ajax.status == 200)
         fnCallback(null, ajax.responseText);
     };
@@ -19,7 +21,18 @@ const PoziviAjax = (() => {
   }
 
   // ažurira podatke loginovanog korisnika
-  function impl_putKorisnik(noviPodaci, fnCallback) {}
+  function impl_putKorisnik(noviPodaci, fnCallback) {
+    let ajax = new XMLHttpRequest();
+    ajax.onreadystatechange = function () {
+      // Anonimna funkcija
+      console.log("proslo");
+      console.log(ajax.responseText);
+      if (ajax.readyState == 4 && ajax.status == 201)
+        fnCallback(null, ajax.responseText);
+    };
+    ajax.open("PUT", "http://localhost:3000/korisnik", true);
+    ajax.send();
+  }
 
   // dodaje novi upit za trenutno loginovanog korisnika
   function impl_postUpit(nekretnina_id, tekst_upita, fnCallback) {}

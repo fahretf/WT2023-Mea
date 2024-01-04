@@ -1,5 +1,4 @@
 //Callback funkcije
-
 function postlogoutCallback(err, data) {
   if (data) {
     // Reset the UI to show the login form
