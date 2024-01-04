@@ -54,7 +54,6 @@ const PoziviAjax = (() => {
     ajax.setRequestHeader("Content-Type", "application/json");
     ajax.onreadystatechange = function () {
       if (ajax.readyState === 4) {
-        // Check if the request is complete
         if (ajax.status === 200) {
           console.log("Prosaooo ");
           try {
@@ -84,7 +83,6 @@ const PoziviAjax = (() => {
     ajax.setRequestHeader("Content-Type", "application/json");
     ajax.onreadystatechange = function () {
       if (ajax.readyState === 4) {
-        // Check if the request is complete
         if (ajax.status === 200) {
           try {
             var odgovor = JSON.parse(ajax.responseText);
@@ -100,7 +98,6 @@ const PoziviAjax = (() => {
       }
     };
     console.log("lol?");
-    // No need to send any data for logout, but you may adjust as needed
     ajax.send();
   }
 

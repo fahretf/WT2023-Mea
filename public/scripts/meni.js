@@ -1,7 +1,6 @@
 //Callback funkcije
 function postlogoutCallback(err, data) {
   if (data) {
-    // Reset the UI to show the login form
     var logoutButton = document.getElementById("logoutButton");
     //ako data nije uredu necemo ukinuti ukinuti logout button
     if (data.poruka == "Uspješno ste se odjavili" && logoutButton) {

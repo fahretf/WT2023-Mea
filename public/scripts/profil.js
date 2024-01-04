@@ -1,10 +1,9 @@
-var imeInput; // profil.js
+var imeInput;
 var prezimeInput;
 var usernameInput;
 var passwordInput;
 
 document.addEventListener("DOMContentLoaded", function () {
-  // Get references to the form fields
   imeInput = document.getElementById("ime");
   prezimeInput = document.getElementById("prezime");
   usernameInput = document.getElementById("username");
