@@ -17,12 +17,15 @@ function postlogoutCallback(err, data) {
 var isLogOutVisable = localStorage.getItem("isLogOutVisable");
 var logoutButton = document.getElementById("logoutButton");
 var loginButton = document.getElementById("prijava");
+var profilButton = document.getElementById("profilID");
 
 if (isLogOutVisable == "true" && logoutButton) {
   logoutButton.style.display = "inline";
+  profilButton.style.display = "inline";
   loginButton.style.display = "none";
 } else {
   logoutButton.style.display = "none";
+  profilButton.style.display = "none";
   loginButton.style.display = "inline";
 }
 
