@@ -61,27 +61,12 @@ const divKuca = document.getElementById("kuca");
 const divPp = document.getElementById("pp");
 
 let listaNekretnina;
-let listaKorisnika = [
-  {
-    id: 1,
-    ime: "Niko",
-    prezime: "Nikic",
-    username: "username11",
-    password: "meahrbenic",
-  },
-  {
-    id: 2,
-    ime: "Neko2",
-    prezime: "Nekic2",
-    username: "username2",
-    password: "$2a$12$TIB20mM/NSJCWMI3WDnbfejpkiQ.IFQkgZzhMJZVJDtUfokhaawBW",
-  },
-];
+let listaKorisnika = [];
 
 PoziviAjax.getNekretnine((err, data) => {
   if (err) console.log("Ne");
   listaNekretnina = JSON.parse(data);
-  
+
   //instanciranje modula
   let nekretnine = SpisakNekretnina();
   nekretnine.init(listaNekretnina, listaKorisnika);

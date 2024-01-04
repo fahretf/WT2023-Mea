@@ -14,7 +14,7 @@ const PoziviAjax = (() => {
       if (ajax.readyState == 4 && ajax.status == 200)
         fnCallback(null, ajax.responseText);
     };
-    ajax.open("GET", "http://localhost:3000/korisnici", true);
+    ajax.open("GET", "http://localhost:3000/korisnik", true);
     ajax.send();
   }
 
@@ -35,9 +35,61 @@ const PoziviAjax = (() => {
     ajax.send();
   }
 
-  function impl_postLogin(username, password, fnCallback) {}
+  function impl_postLogin(username, password, fnCallback) {
+    let ajax = new XMLHttpRequest();
+    ajax.open("POST", "/login", true);
+    ajax.setRequestHeader("Content-Type", "application/json");
+    ajax.onreadystatechange = function () {
+      if (ajax.readyState === 4) {
+        // Check if the request is complete
+        if (ajax.status === 200) {
+          console.log("Prosaooo ");
+          try {
+            var odgovor = JSON.parse(ajax.responseText);
+            console.log(odgovor);
+            fnCallback(null, odgovor);
+          } catch (error) {
+            console.error("Error parsing JSON:", error);
+            fnCallback("Error parsing JSON", null);
+          }
+        } else {
+          fnCallback("Server error", null);
+        }
+      }
+    };
 
-  function impl_postLogout(fnCallback) {}
+    var podaci = {
+      username: username,
+      password: password,
+    };
+    ajax.send(JSON.stringify(podaci));
+  }
+
+  function impl_postLogout(fnCallback) {
+    var ajax = new XMLHttpRequest();
+    ajax.open("POST", "/logout", true);
+    ajax.setRequestHeader("Content-Type", "application/json");
+    ajax.onreadystatechange = function () {
+      if (ajax.readyState === 4) {
+        // Check if the request is complete
+        if (ajax.status === 200) {
+          try {
+            var odgovor = JSON.parse(ajax.responseText);
+            console.log(odgovor);
+            fnCallback(null, odgovor);
+          } catch (error) {
+            console.error("Error parsing JSON:", error);
+            fnCallback("Error parsing JSON", null);
+          }
+        } else {
+          fnCallback("Server error", null);
+        }
+      }
+    };
+    console.log("lol?");
+    // No need to send any data for logout, but you may adjust as needed
+    ajax.send();
+  }
 
   return {
     postLogin: impl_postLogin,

@@ -7,32 +7,21 @@
     <link rel="stylesheet" type="text/css" href="../css/meni.css" />
 
     <title>Prijava</title>
+
   </head>
   <body>
-    <div class="meni">
-      <ul class="meni-container">
-        <li>
-          <a href="profil.html">Profil</a>
-        </li>
-        <li>
-          <a href="nekretnine.html">Nekretnine</a>
-        </li>
-        <li>
-          <a href="detalji.html">Detalji</a>
-        </li>
-        <li>
-          <a href="prijava.html">Prijava</a>
-        </li>
-      </ul>
-    </div>
-    <form action="/login" method="post">
+  <iframe id="iframeMeniID" src="./meni.html"></iframe>
+    <form id="forma">
       <label for="username">Korisničko ime:</label>
       <input type="text" id="username" name="username" required />
 
       <label for="password">Lozinka:</label>
       <input type="password" id="password" name="password" required />
-
-      <button type="submit">Prijava</button>
+      <br> <label id="poruka"> <label>
+      <button id="submit">Prijava</button>      
     </form>
-  </body>
+
+  </body>  
+  <script src="../scripts/poziviAjax.js"></script>
+  <script src="../scripts/prijava.js"></script>
 </html>
