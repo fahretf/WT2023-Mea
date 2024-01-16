@@ -4,6 +4,7 @@ const fs = require("fs");
 const session = require("express-session");
 const bcrypt = require("bcrypt");
 const { Console } = require("console");
+const db = require("./public/scripts/baza.js");
 
 const PORT = 3000;
 const app = express();
@@ -38,38 +39,26 @@ app.get("/prijava.html", function (req, res) {
   res.sendFile(__dirname + "/public/html/prijava.html");
 });
 app.post("/login", function (req, res) {
-  fs.readFile("data/korisnici.json", "utf-8", (err, data) => {
-    if (err) {
-      console.error(err);
-      res.send({ greska: "Greška pri čitanju korisnika" });
-      return;
-    }
-    try {
-      const listaKorisnika = JSON.parse(data);
-      var trazeniKorisnik = listaKorisnika.find(
-        (korisnik) => korisnik.username === req.body.username
-      );
-
-      if (!trazeniKorisnik) {
+  db.Korisnik.findOne({ where: { username: req.body.username } }).then(
+    function (korisnik) {
+      if (!korisnik) {
         res.send({ greska: "Korisnik nije pronađen" });
         return;
       }
-
-      bcrypt.hash(trazeniKorisnik.password, 10, function (err, hash) {});
-
+      bcrypt.hash(korisnik.password, 10, function (err, hash) {});
       bcrypt.compare(
         req.body.password,
-        trazeniKorisnik.password,
+        korisnik.password,
         function (err, result) {
           if (err) {
             console.error(err);
             res.send({ greska: "Neuspješna prijava" });
           } else if (result) {
             req.session.data = {
-              username: trazeniKorisnik.username,
-              id: trazeniKorisnik.id,
-              ime: trazeniKorisnik.ime,
-              prezime: trazeniKorisnik.prezime,
+              username: korisnik.username,
+              id: korisnik.id,
+              ime: korisnik.ime,
+              prezime: korisnik.prezime,
             };
             res.send({ poruka: "Uspješna prijava" });
           } else {
@@ -78,11 +67,8 @@ app.post("/login", function (req, res) {
           }
         }
       );
-    } catch (parseError) {
-      console.error(parseError);
-      res.send({ greska: "Greška pri parsiranju JSON-a" });
     }
-  });
+  );
 });
 
 app.post("/logout", function (req, res) {
@@ -103,21 +89,8 @@ app.get("/korisnik", function (req, res) {
 });
 
 app.get("/nekretnine", function (req, res) {
-  fs.readFile("data/nekretnine.json", "utf-8", (err, data) => {
-    if (err) {
-      console.error(err);
-      res.status(500).send({ greska: "Greška pri čitanju nekretnina" });
-      return;
-    }
-    try {
-      // Parse the JSON data
-      const nekretnine = JSON.parse(data);
-      // Send the nekretnine as a JSON response
-      res.status(200).json(nekretnine);
-    } catch (parseError) {
-      console.error(parseError);
-      res.status(500).send({ greska: "Greška pri parsiranju JSON-a" });
-    }
+  db.Nekretnina.findAll().then(function (nekretnine) {
+    res.status(200).json(nekretnine);
   });
 });
 
