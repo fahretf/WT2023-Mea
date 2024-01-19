@@ -35,42 +35,19 @@ PoziviAjax.getNekretninaById(nekretnina_id, (err, data) => {
       const pitanjeDiv = document.createElement("div");
       pitanjeDiv.classList.add("pitanje");
 
-      // Create a div for the bold username
       const usernameDiv = document.createElement("div");
       usernameDiv.style.fontWeight = "bold";
       usernameDiv.textContent = upit.Korisnik.username;
 
-      // Create a div for the text_upita
       const tekstUpitaDiv = document.createElement("div");
       tekstUpitaDiv.textContent = upit.tekst_upita;
+      tekstUpitaDiv.style.fontWeight = "normal";
 
-      // Append both username and text_upita divs to the main pitanjeDiv
       pitanjeDiv.appendChild(usernameDiv);
       pitanjeDiv.appendChild(tekstUpitaDiv);
 
       listItem.appendChild(pitanjeDiv);
       upitiDiv.appendChild(listItem);
     });
-
-    // const upitiDiv = document.getElementById("listUpita");
-
-    // nekretnina.Upits.forEach((upit) => {
-    //   const listItem = document.createElement("li");
-    //   listItem.classList.add("element");
-
-    //   const pitanjeDiv = document.createElement("div");
-
-    //   pitanjeDiv.classList.add("pitanje");
-
-    //   pitanjeDiv.textContent = upit.Korisnik.username;
-
-    //   console.log(upit.KorisnikId);
-
-    //   pitanjeDiv.textContent = pitanjeDiv.textContent + "\n" + upit.tekst_upita;
-
-    //   listItem.appendChild(pitanjeDiv);
-
-    //   upitiDiv.appendChild(listItem);
-    // });
   }
 });
