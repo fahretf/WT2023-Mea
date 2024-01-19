@@ -51,3 +51,6 @@ PoziviAjax.getNekretninaById(nekretnina_id, (err, data) => {
     });
   }
 });
+
+
+PoziviAjax.putUpit()

@@ -29,12 +29,19 @@
     width: 600px;
 }
 
+#noviUpitInput{
+    width: 600px;
+    height: 100px;
+    padding: 5px;
+    margin-bottom: 20px;
+}
+
 .pitanje{
     background-color: beige;
     border: 1px solid;
     padding: 5px;
     margin: 20px 0;
-    
+
 } 
 
 ol{
