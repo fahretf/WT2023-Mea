@@ -95,21 +95,10 @@ app.get("/nekretnine", function (req, res) {
 });
 
 app.get("/korisnici", function (req, res) {
-  fs.readFile("data/korisnici.json", "utf-8", (err, data) => {
-    if (err) {
-      console.error(err);
-      res.status(500).send({ greska: "Greška pri čitanju nekretnina" });
-      return;
-    }
-    try {
-      // Parse the JSON data
-      const nekretnine = JSON.parse(data);
-      // Send the nekretnine as a JSON response
-      res.status(200).json(nekretnine);
-    } catch (parseError) {
-      console.error(parseError);
-      res.status(500).send({ greska: "Greška pri parsiranju JSON-a" });
-    }
+  db.Korisnik.findAll().then(function (korisnici) {
+    if (!korisnici)
+      res.status(500).send({ greska: "Greška pri čitanju korisnika" });
+    res.status(200).json(korisnici);
   });
 });
 
@@ -132,6 +121,7 @@ app.post("/upit", function (req, res) {
       res.status(401).send({
         greska: `Nekretnina sa id-em ${req.body.nekretnina_id} ne postoji`,
       });
+    //ovo cemo dodavat u tabelu :D
 
     trazenaNekretnina.upiti.push({
       korisnik_id: req.session.data.id,
@@ -152,64 +142,37 @@ app.put("/korisnik", function (req, res) {
   if (!req.session.data) {
     return res.status(401).send({ greska: "Neautorizovan pristup" });
   }
-
-  fs.readFile("data/korisnici.json", function (err, data) {
-    let listaKorisnika = JSON.parse(data);
-    let trazeniKorisnik = listaKorisnika.find(
-      (korisnik) => korisnik.username === req.session.data.username
-    );
-
-    if (!trazeniKorisnik) {
-      res.status(400).send({ poruka: "Korisnik ne postoji" });
-    }
-
-    if (req.body.ime) trazeniKorisnik.ime = req.body.ime;
-    if (req.body.prezime) trazeniKorisnik.prezime = req.body.prezime;
-    if (req.body.username) trazeniKorisnik.username = req.body.username;
-    if (req.body.password) {
-      // Hash the password before storing it
-      bcrypt.hash(
-        req.body.password,
-        saltRounds,
-        function (err, hashedPassword) {
-          if (err) {
-            console.error(err);
-            return res
-              .status(500)
-              .send({ poruka: "Greška pri hashiranju lozinke" });
-          }
-
-          trazeniKorisnik.password = hashedPassword;
-
-          fs.writeFile(
-            "data/korisnici.json",
-            JSON.stringify(listaKorisnika),
-            "utf-8",
-            (err) => {
-              if (err) {
-                console.error(err);
-                return res
-                  .status(500)
-                  .send({ poruka: "Greška pri pisanju korisnika" });
-              }
-              res.status(200).send({ poruka: "Upit je uspješno dodan" });
-            }
-          );
-        }
-      );
-    }
-
-    fs.writeFile(
-      "data/korisnici.json",
-      JSON.stringify(listaKorisnika),
-      "utf-8",
-      (err) => {
-        if (err) console.error(err);
-        else {
-          res.status(200).send({ poruka: "Upit je uspješno dodan" });
-        }
+  var korisnik = db.Korisnik.findByPk(req.data.korisnik_id);
+  if (!korisnik) res.status(400).send({ poruka: "Korisnik ne postoji" });
+  if (req.body.ime) korisnik.ime = req.body.ime;
+  if (req.body.prezime) korisnik.prezime = req.body.prezime;
+  if (req.body.username) korisnik.username = req.body.username;
+  if (req.body.password) {
+    // Hash the password before storing it
+    bcrypt.hash(req.body.password, saltRounds, function (err, hashedPassword) {
+      if (err) {
+        console.error(err);
+        return res
+          .status(500)
+          .send({ poruka: "Greška pri hashiranju lozinke" });
       }
-    );
+      korisnik.password = hashedPassword;
+    });
+  }
+});
+
+app.get("/nekretnina/:id", function (req, res) {
+  db.Nekretnina.findByPk(req.params.id, {
+    include: [
+      {
+        model: db.Upit,
+        include: [db.Korisnik], // Include Korisnik in Upit
+      },
+    ],
+  }).then((nekretnina) => {
+    if (!nekretnina)
+      res.status(400).send({ greska: `Nekretnina sa id-em ${id} ne postoji.` });
+    else res.status(200).send(JSON.stringify(nekretnina));
   });
 });
 

@@ -38,18 +38,54 @@ function spojiNekretnine(divReferenca, instancaModula, tip_nekretnine) {
     cijenaP.classList.add("cijena");
     cijenaP.textContent = `Cijena: ${nekretnina.cijena}KM`;
 
-    const centerDiv = document.createElement("div");
-    centerDiv.classList.add("center");
+    const centerButtonDiv = document.createElement("div");
+    centerButtonDiv.classList.add("center");
 
     const detaljiButton = document.createElement("button");
     detaljiButton.textContent = "Detalji";
+    detaljiButton.classList.add("button");
+    detaljiButton.addEventListener("click", function () {
+      expandDiv.classList.toggle("hidden");
+      if (expandDiv.classList.contains("hidden")) {
+        div.style.height = 280 + "px";
+      } else {
+        div.style.height = 400 + "px";
+      }
+    });
+
+    centerButtonDiv.appendChild(detaljiButton);
+
+    const expandDiv = document.createElement("div");
+    expandDiv.classList.add("hidden", "expandDiv");
+
+    const lokacija = document.createElement("p");
+    lokacija.classList.add("lokacija");
+    lokacija.textContent = `Lokacija: ${nekretnina.lokacija}`;
+
+    const godina_izgradnje = document.createElement("p");
+    godina_izgradnje.classList.add("godina_izgradnje");
+    godina_izgradnje.textContent = `Godina_izgradnje: ${nekretnina.godina_izgradnje}`;
+
+    const centerDiv = document.createElement("div");
+    centerDiv.classList.add("center");
+
+    const otvoriDetalje = document.createElement("button");
+    otvoriDetalje.textContent = "Otvori detalje";
+    otvoriDetalje.addEventListener("click", function () {
+      console.log("kliknuto");
+      window.location.href = `detalji.html?id=${nekretnina.id}`;
+    });
 
     div.appendChild(img);
     div.appendChild(nazivP);
     div.appendChild(kvadraturaP);
     div.appendChild(cijenaP);
-    centerDiv.appendChild(detaljiButton);
-    div.appendChild(centerDiv);
+    div.appendChild(centerButtonDiv);
+    expandDiv.appendChild(lokacija);
+    expandDiv.appendChild(godina_izgradnje);
+    expandDiv.appendChild(centerDiv);
+    centerDiv.appendChild(otvoriDetalje);
+    div.appendChild(expandDiv);
     li.appendChild(div);
     ul.appendChild(li);
   });

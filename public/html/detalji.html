@@ -13,59 +13,38 @@
       <div id="osnovno">
         <h3>OSNOVNO</h3>
         <img
-          src="../slike/kosevo.jpg"
+          src="../slike/slika.webp"
           class="slika"
           alt="slika dnevnog boravka stana"
         />
-        <p class="info"><b>Naziv: </b>Stan na Koševu</p>
-        <p class="info"><b>Kvadratura: </b>54 m<sup>2</sup></p>
-        <p class="info"><b>Cijena: </b>90 000KM</p>
+        <p id="naziv" class="info"><b>Naziv: </p>
+        <p id="kvadratura" class="info"><b>Kvadratura: </p>
+        <p id="cijena" class="info"><b>Cijena: </p>
       </div>
 
       <div id="detalji">
         <h3>DETALJI</h3>
         <div class="tabelica">
           <div class="kolona1">
-            <p><b>Tip grijanja: </b> plin</p>
-            <p><b>Lokacija: </b> Novo Sarajevo</p>
+            <p id="tip_grijanja"><b>Tip grijanja: </p>
+            <p id="lokacija"><b>Lokacija: </p>
           </div>
 
           <div class="kolona1">
-            <p><b>Godinja izgradnje: </b>2005</p>
-            <p><b>Datum objave: </b> 11.11.2023.</p>
+            <p id="godina_izgradnje"><b>Godinja izgradnje: </p>
+            <p id="datum_objave"><b>Datum objave: </p>
           </div>
         </div>
       </div>
 
       <div id="upiti">
         <h3><b>UPITI</b></h3>
-        <ol>
-          <li class="element">
-            <div class="pitanje">
-              <p><b>username1</b></p>
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
-                in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-                nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-                sunt in culpa qui officia deserunt mollit anim id est laborum.
-              </p>
-            </div>
+        <ol id="listUpita">
 
-            <div class="pitanje">
-              <p><b>username2</b></p>
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                nisi ut aliquip ex ea commodo consequat.
-              </p>
-            </div>
-          </li>
         </ol>
       </div>
     </div>
   </body>
+  <script src="../scripts/poziviAjax.js"></script>
+  <script type="text/javascript" src="../scripts/spojiDetalje.js"></script>
 </html>

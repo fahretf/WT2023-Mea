@@ -5,6 +5,7 @@ db.sequelize.sync({ force: true }).then(function () {
     process.exit();
   });
 });
+
 function inicializacija() {
   return new Promise(function (resolve, reject) {
     //korisnici
@@ -41,11 +42,6 @@ function inicializacija() {
       godina_izgradnje: 2019,
       datum_objave: "01.10.2023.",
       opis: "Sociis natoque penatibus.",
-      upiti: [
-        { korisnik_id: 1, tekst_upita: "Nullam eu pede mollis pretium." },
-        { korisnik_id: 2, tekst_upita: "Phasellus viverra nulla." },
-        { korisnik_id: 1, tekst_upita: "blabla" },
-      ],
     });
 
     db.Nekretnina.create({
@@ -59,7 +55,27 @@ function inicializacija() {
       godina_izgradnje: 2005,
       datum_objave: "20.08.2023.",
       opis: "Magnis dis parturient montes.",
-      upiti: [{ korisnik_id: 2, tekst_upita: "Integer tincidunt." }],
+    });
+
+    db.Upit.create({
+      id: 1,
+      tekst_upita: "Magnus opum mea hrbenci",
+      NekretninaId: 1,
+      KorisnikId: 2,
+    });
+
+    db.Upit.create({
+      id: 2,
+      tekst_upita: "Integer sunce sija ova kuca nije lijepa.",
+      NekretninaId: 1,
+      KorisnikId: 1,
+    });
+
+    db.Upit.create({
+      id: 3,
+      tekst_upita: "Integer tincidunt.",
+      NekretninaId: 1,
+      KorisnikId: 2,
     });
   });
 }

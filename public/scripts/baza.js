@@ -21,4 +21,7 @@ db.Korisnik = Korisnik;
 Nekretnina.hasMany(Upit);
 Upit.belongsTo(Nekretnina);
 
+Korisnik.hasMany(Upit);
+Upit.belongsTo(Korisnik);
+
 module.exports = db;

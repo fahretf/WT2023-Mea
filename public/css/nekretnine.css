@@ -61,3 +61,14 @@ body {
     gap:20px;
   }
 
+.godina_izgradnje{
+    justify-content: right;
+}
+
+.hidden{
+    display: none;
+}
+
+.expandDiv{
+    z-index: 100;
+}
