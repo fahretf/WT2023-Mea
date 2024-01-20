@@ -14,7 +14,7 @@ function inicializacija() {
       ime: "Niko",
       prezime: "Nikic",
       username: "username11",
-      password: "meahrbenic",
+      password: "$2a$12$hpuOGWLIenQppIX.JE5ZRe5NPyatEfllRjF1VMn4mVZ0Pl.pzxnTa",
     });
     db.Korisnik.create({
       id: 2,
@@ -28,7 +28,7 @@ function inicializacija() {
       ime: "Neko3",
       prezime: "Nekicc",
       username: "username5",
-      password: "nista",
+      password: "$2a$12$YqLHqohSKl/Y337b/sy2meSTdEOH2Dsg66ejiVpwKmlenziOkLYL2",
     });
 
     db.Nekretnina.create({
