@@ -35,7 +35,26 @@ const PoziviAjax = (() => {
   }
 
   // dodaje novi upit za trenutno loginovanog korisnika
-  function impl_postUpit(nekretnina_id, tekst_upita, fnCallback) {}
+  function impl_postUpit(nekretnina_id, tekst_upita, fnCallback) {
+    var ajax = new XMLHttpRequest();
+    ajax.open("POST", "/upit", true);
+    ajax.setRequestHeader("Content-Type", "application/json");
+    ajax.onreadystatechange = function () {
+      if (ajax.readyState == 4 && ajax.status == 200) {
+        var odgovor = JSON.parse(ajax.responseText);
+        fnCallback(null, odgovor);
+      } else if (ajax.readyState == 4 && ajax.status == 400) {
+        var odgovor = JSON.parse(ajax.responseText);
+        fnCallback(odgovor, null);
+      }
+    };
+    var upit = {
+      id: 0,
+      NekretninaId: nekretnina_id,
+      tekst_upita: tekst_upita,
+    };
+    ajax.send(JSON.stringify(upit));
+  }
 
   function impl_getNekretnine(fnCallback) {
     let ajax = new XMLHttpRequest();

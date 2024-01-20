@@ -103,40 +103,56 @@ app.get("/korisnici", function (req, res) {
 });
 
 app.post("/upit", function (req, res) {
-  console.log(req);
-  if (!req.session.data) {
-    return res.status(401).send({ greska: "Neautorizovan pristup" });
+  try {
+    // const nekretnina = db.Nekretnina.findByPk(nekretninaId);
+    // if (!nekretnina) {
+    //   return res
+    //     .status(401)
+    //     .send({ greska: `Nekretnina sa id-em ${nekretninaId} ne postoji` });
+    // }
+    // console.log(nekretninaId);
+    let upit = req.body;
+    upit.KorisnikId = req.session.data.id;
+
+    console.log(upit);
+    db.Upit.create(upit).then((upit2) => {
+      console.log("Evo upita");
+      console.log(upit2);
+      res.status(200).send({ poruka: "Upit je uspješno dodan" });
+    });
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).send({ greska: "Greška prilikom upisa u bazu podataka" });
   }
-  fs.readFile("data/nekretnine.json", "utf-8", (err, data) => {
-    var nekretnine = JSON.parse(data);
-
-    var trazenaNekretnina = nekretnine.find((nekretnina) => {
-      console.log(nekretnina.id);
-      console.log(req.body.nekretnina_id);
-      console.log(nekretnina.id === req.body.nekretnina_id);
-      return nekretnina.id === req.body.nekretnina_id;
-    });
-
-    if (!trazenaNekretnina)
-      res.status(401).send({
-        greska: `Nekretnina sa id-em ${req.body.nekretnina_id} ne postoji`,
-      });
-    //ovo cemo dodavat u tabelu :D
-
-    trazenaNekretnina.upiti.push({
-      korisnik_id: req.session.data.id,
-      tekst_upita: req.body.tekst_upita,
-    });
-    const updated = JSON.stringify(nekretnine);
-
-    fs.writeFile("data/nekretnine.json", updated, "utf-8", (err) => {
-      if (err) console.error(err);
-      else {
-        res.status(200).send({ poruka: "Upit je uspješno dodan" });
-      }
-    });
-  });
 });
+// fs.readFile("data/nekretnine.json", "utf-8", (err, data) => {
+//   var nekretnine = JSON.parse(data);
+
+//   var trazenaNekretnina = nekretnine.find((nekretnina) => {
+//     console.log(nekretnina.id);
+//     console.log(req.body.nekretnina_id);
+//     console.log(nekretnina.id === req.body.nekretnina_id);
+//     return nekretnina.id === req.body.nekretnina_id;
+//   });
+
+//   if (!trazenaNekretnina)
+//     res.status(401).send({
+//       greska: `Nekretnina sa id-em ${req.body.nekretnina_id} ne postoji`,
+//     });
+//   //ovo cemo dodavat u tabelu :D
+//   trazenaNekretnina.upiti.push({
+//     korisnik_id: req.session.data.id,
+//     tekst_upita: req.body.tekst_upita,
+//   });
+//   const updated = JSON.stringify(nekretnine);
+
+//   fs.writeFile("data/nekretnine.json", updated, "utf-8", (err) => {
+//     if (err) console.error(err);
+//     else {
+//       res.status(200).send({ poruka: "Upit je uspješno dodan" });
+//     }
+//   });
+// });
 
 app.put("/korisnik", function (req, res) {
   if (!req.session.data) {
