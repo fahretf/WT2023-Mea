@@ -10,8 +10,6 @@ const PoziviAjax = (() => {
   function impl_getKorisnik(fnCallback) {
     let ajax = new XMLHttpRequest();
     ajax.onreadystatechange = function () {
-      // Anonimna funkcija
-      console.log("proslo");
       console.log(ajax.responseText);
       if (ajax.readyState == 4 && ajax.status == 200)
         fnCallback(null, ajax.responseText);
@@ -25,7 +23,6 @@ const PoziviAjax = (() => {
     let ajax = new XMLHttpRequest();
     ajax.onreadystatechange = function () {
       // Anonimna funkcija
-      console.log("proslo");
       console.log(ajax.responseText);
       if (ajax.readyState == 4 && ajax.status == 201)
         fnCallback(null, ajax.responseText);
@@ -74,7 +71,6 @@ const PoziviAjax = (() => {
     ajax.onreadystatechange = function () {
       if (ajax.readyState === 4) {
         if (ajax.status === 200) {
-          console.log("Prosaooo ");
           try {
             var odgovor = JSON.parse(ajax.responseText);
             console.log(odgovor);
@@ -116,7 +112,6 @@ const PoziviAjax = (() => {
         }
       }
     };
-    console.log("lol?");
     ajax.send();
   }
 

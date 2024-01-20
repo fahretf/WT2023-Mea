@@ -94,7 +94,6 @@ function postUpitCallback(err, res) {
   if (err) {
     console.error(err);
   } else {
-    console.log(res);
     prikaziUpit(res);
   }
 }
@@ -104,6 +103,5 @@ document
   .addEventListener("click", function (event) {
     event.preventDefault();
     let text_upita = document.getElementById("noviUpitInput").value;
-    console.log(text_upita);
     PoziviAjax.postUpit(nekretnina_id, text_upita, postUpitCallback);
   });

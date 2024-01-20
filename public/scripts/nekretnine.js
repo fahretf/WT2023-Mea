@@ -72,7 +72,6 @@ function spojiNekretnine(divReferenca, instancaModula, tip_nekretnine) {
     const otvoriDetalje = document.createElement("button");
     otvoriDetalje.textContent = "Otvori detalje";
     otvoriDetalje.addEventListener("click", function () {
-      console.log("kliknuto");
       window.location.href = `detalji.html?id=${nekretnina.id}`;
     });
 
