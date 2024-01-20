@@ -98,6 +98,12 @@ function postUpitCallback(err, res) {
   }
 }
 
+const noviUpitDiv = document.getElementById("noviUpitDiv");
+const isLogOutVisable = localStorage.getItem("isLogOutVisable");
+if (isLogOutVisable == "false") {
+  noviUpitDiv.style.display = "none";
+}
+
 document
   .getElementById("potvrdiUnos")
   .addEventListener("click", function (event) {
