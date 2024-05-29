@@ -6,7 +6,6 @@ const bcrypt = require("bcrypt");
 const { Console } = require("console");
 const db = require("./public/scripts/baza.js");
 
-const PORT = 3000;
 const app = express();
 app.use(express.static("public"));
 app.use(bodyParser.json());
@@ -152,4 +151,4 @@ app.get("/nekretnina/:id", function (req, res) {
   });
 });
 
-app.listen(PORT, () => console.log("Server running"));
+app.listen(8080, () => console.log("Server running"));
